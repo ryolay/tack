@@ -33,8 +33,10 @@ final class ReminderScheduler: NSObject, UNUserNotificationCenterDelegate {
         lastSignature = signature
 
         let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests()
-        guard !items.isEmpty else { return }
+        guard !items.isEmpty else {
+            center.removeAllPendingNotificationRequests() // no reminder left in any note
+            return
+        }
 
         let requests: [UNNotificationRequest] = items.map { r in
             let content = UNMutableNotificationContent()
@@ -51,7 +53,10 @@ final class ReminderScheduler: NSObject, UNUserNotificationCenterDelegate {
                 self.onDeniedChange?(!granted)
                 if !granted { self.lastSignature = "" } // retry once authorized
             }
+            // Replace the scheduled reminders only once authorization is confirmed,
+            // so a failed or denied request never wipes the existing ones.
             guard granted else { return }
+            center.removeAllPendingNotificationRequests()
             requests.forEach { center.add($0) }
         }
     }
