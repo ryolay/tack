@@ -85,6 +85,31 @@ final class LocalizationTests: XCTestCase {
         }
     }
 
+    /// Compiles the catalog like build.sh does and checks the plural form picked for each language.
+    func testPluralsFollowTheAppLanguage() throws {
+        let out = FileManager.default.temporaryDirectory.appendingPathComponent("TackStrings-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: out) }
+        let compile = Process()
+        compile.executableURL = URL(fileURLWithPath: "/usr/bin/xcrun")
+        compile.arguments = ["xcstringstool", "compile", Self.root.appendingPathComponent("Resources/Localizable.xcstrings").path,
+                             "--output-directory", out.path]
+        try compile.run()
+        compile.waitUntilExit()
+        XCTAssertEqual(compile.terminationStatus, 0)
+
+        let expected: [(lang: String, count: Int, text: String)] = [
+            ("fr", 1, "1 mot"), ("fr", 5, "5 mots"),
+            ("pl", 2, "2 słowa"), ("pl", 5, "5 słów"),
+            ("ru", 21, "21 слово"), ("ru", 25, "25 слов"),
+            ("ar", 2, "2 كلمتان"), ("ar", 5, "5 كلمات"),
+        ]
+        for item in expected {
+            let bundle = try XCTUnwrap(Bundle(url: out.appendingPathComponent("\(item.lang).lproj")))
+            let text = Lang.format("%lld words", bundle: bundle, locale: Locale(identifier: item.lang), [item.count])
+            XCTAssertEqual(text, item.text, item.lang)
+        }
+    }
+
     func testRightToLeftLanguages() {
         let rtl = Lang.all.filter { Locale.Language(identifier: $0.code).characterDirection == .rightToLeft }.map(\.code)
         XCTAssertEqual(Set(rtl), ["ar", "he"])

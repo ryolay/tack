@@ -63,5 +63,15 @@ func tr(_ english: String) -> String {
 
 /// Translates a format string and fills it in, with plural rules, e.g. `trf("%lld words", count)`.
 func trf(_ english: String, _ args: CVarArg...) -> String {
-    String(format: tr(english), locale: Lang.locale, arguments: args)
+    Lang.format(english, bundle: Lang.bundle, locale: Lang.locale, args)
+}
+
+extension Lang {
+    /// `String(format:locale:)` on the bundle's localized format picks the String Catalog plural form
+    /// with the rules of the *bundle's* language. `String.localizedStringWithFormat` would use the
+    /// system language instead (wrong for "5 słów" or "2 كلمتان" when the app language differs).
+    static func format(_ key: String, bundle: Bundle, locale: Locale, _ args: [CVarArg]) -> String {
+        let format = bundle.localizedString(forKey: key, value: key, table: "Localizable")
+        return String(format: format, locale: locale, arguments: args)
+    }
 }
