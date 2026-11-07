@@ -16,6 +16,7 @@ Checklists, reminders, tags and Markdown in a tiny native menu bar app for macOS
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)
 ![Swift](https://img.shields.io/badge/Swift-SwiftUI_%2B_AppKit-F05138?logo=swift&logoColor=white)
 [![Code style: SwiftLint](https://img.shields.io/badge/code_style-SwiftLint-blue)](.swiftlint.yml)
+![Languages: 34](https://img.shields.io/badge/languages-34-blueviolet)
 ![Price: free](https://img.shields.io/badge/price-free-brightgreen)
 ![No telemetry](https://img.shields.io/badge/telemetry-none-brightgreen)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
@@ -29,7 +30,7 @@ Checklists, reminders, tags and Markdown in a tiny native menu bar app for macOS
 
 <br>
 
-[**Download Tack 0.1.0**](https://github.com/ryolay/tack/releases/latest) · [Features](#-features) · [Shortcuts](#%EF%B8%8F-keyboard-shortcuts) · [Build from source](#-build-from-source)
+[**Download Tack 0.1.0**](https://github.com/ryolay/tack/releases/latest) · [Features](#-features) · [Languages](#-available-in-34-languages) · [Shortcuts](#%EF%B8%8F-keyboard-shortcuts) · [Build from source](#-build-from-source)
 
 </div>
 
@@ -74,7 +75,7 @@ No account, no cloud, no analytics. One JSON file on your Mac, backed up at ever
 </tr>
 <tr>
 <td width="50%"><img src="docs/focus.png" alt="Focus mode without the note list"><p align="center"><sub><b>Focus mode</b>: hide the list with <kbd>⌘</kbd> <kbd>0</kbd></sub></p></td>
-<td width="50%"><img src="docs/settings.png" alt="Settings window"><p align="center"><sub><b>Settings</b>: shortcut, language, theme, font, reminders, export</sub></p></td>
+<td width="50%"><img src="docs/settings.png" alt="Settings window"><p align="center"><sub><b>Settings</b>: shortcut, 34 languages, theme, font, reminders, export</sub></p></td>
 </tr>
 </table>
 
@@ -92,8 +93,30 @@ No account, no cloud, no analytics. One JSON file on your Mac, backed up at ever
 | 🔍 **Search** | Across every note, accent and case insensitive, with <kbd>↑</kbd> <kbd>↓</kbd> <kbd>↩</kbd> to jump in |
 | 📌 **Keep on top** | Pin the panel to keep a checklist in sight while you work |
 | 🎨 **Make it yours** | Light or dark theme, system, serif, rounded or mono font, 12 to 22 pt |
-| 🌍 **English and French** | Follows your system language, or pick one in Settings |
+| 🌍 **34 languages** | Follows your system language (right-to-left included), or pick one in Settings |
 | 📤 **Export** | Every note as a Markdown file, in one click |
+
+## 🌍 Available in 34 languages
+
+Tack follows your Mac's language, including right-to-left layouts for Arabic and Hebrew. You can also pick a language in **Settings › General**.
+
+<table>
+<tr><td>🇬🇧 English</td><td>🇫🇷 Français</td><td>🇩🇪 Deutsch</td><td>🇪🇸 Español</td><td>🇮🇹 Italiano</td><td>🇧🇷 Português (Brasil)</td></tr>
+<tr><td>🇵🇹 Português (Portugal)</td><td>🇳🇱 Nederlands</td><td>🇦🇩 Català</td><td>🇩🇰 Dansk</td><td>🇸🇪 Svenska</td><td>🇳🇴 Norsk bokmål</td></tr>
+<tr><td>🇫🇮 Suomi</td><td>🇵🇱 Polski</td><td>🇨🇿 Čeština</td><td>🇸🇰 Slovenčina</td><td>🇭🇺 Magyar</td><td>🇷🇴 Română</td></tr>
+<tr><td>🇭🇷 Hrvatski</td><td>🇬🇷 Ελληνικά</td><td>🇹🇷 Türkçe</td><td>🇷🇺 Русский</td><td>🇺🇦 Українська</td><td>🇸🇦 العربية</td></tr>
+<tr><td>🇮🇱 עברית</td><td>🇮🇳 हिन्दी</td><td>🇹🇭 ไทย</td><td>🇻🇳 Tiếng Việt</td><td>🇮🇩 Bahasa Indonesia</td><td>🇲🇾 Bahasa Melayu</td></tr>
+<tr><td>🇨🇳 简体中文</td><td>🇹🇼 繁體中文</td><td>🇯🇵 日本語</td><td>🇰🇷 한국어</td></tr>
+</table>
+
+<table>
+<tr>
+<td width="50%"><img src="docs/arabic.png" alt="Tack in Arabic, right to left"><p align="center"><sub><b>العربية</b>: the whole layout flips right to left</sub></p></td>
+<td width="50%"><img src="docs/japanese.png" alt="Tack in Japanese"><p align="center"><sub><b>日本語</b>: dates and plurals follow the language too</sub></p></td>
+</tr>
+</table>
+
+Translations live in [`Resources/Localizable.xcstrings`](Resources/Localizable.xcstrings), Apple's String Catalog format: open it in Xcode to fix a translation or add a language, and send a pull request. Reminder keywords (`@tomorrow`, `@demain`…) are understood in English and French; dates and times like `@25/12 10:00` work in every language.
 
 ## ⌨️ Keyboard shortcuts
 

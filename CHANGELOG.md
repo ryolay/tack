@@ -6,6 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Tack speaks 34 languages, with right-to-left layouts for Arabic and Hebrew. It follows the system language, or the one picked in Settings (listed with flags and native names).
+- Translations use Apple's String Catalog (`Resources/Localizable.xcstrings`), checked by tests in CI.
+
 ## [0.1.0] - 2026-11-07
 
 First public release.

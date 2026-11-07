@@ -5,9 +5,9 @@ enum Scope: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var label: String {
         switch self {
-        case .notes: L("Notes", "Notes")
-        case .archive: L("Archives", "Archive")
-        case .trash: L("Corbeille", "Trash")
+        case .notes: tr("Notes")
+        case .archive: tr("Archived")
+        case .trash: tr("Trash")
         }
     }
     var icon: String {

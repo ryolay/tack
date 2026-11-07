@@ -61,7 +61,7 @@ final class HotKeyManager {
 
     private static func keyName(_ event: NSEvent) -> String {
         let special: [UInt16: String] = [
-            49: L("Espace", "Space"), 36: "↩", 48: "⇥", 51: "⌫", 117: "⌦",
+            49: tr("Space"), 36: "↩", 48: "⇥", 51: "⌫", 117: "⌦",
             123: "←", 124: "→", 125: "↓", 126: "↑",
             122: "F1", 120: "F2", 99: "F3", 118: "F4", 96: "F5", 97: "F6",
             98: "F7", 100: "F8", 101: "F9", 109: "F10", 103: "F11", 111: "F12",

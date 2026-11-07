@@ -3,29 +3,8 @@ import Foundation
 extension NoteStore {
     // MARK: - Persistence
 
-    private static var welcomeText: String { L(welcomeFR, welcomeEN) }
-
-    private static let welcomeFR = """
-    # Bienvenue dans Tack 📌
-
-    Ouvrir / fermer : ⌃⌥N — partout, même en plein écran
-
-    ## Écrire
-    - [ ] Clique sur une case pour la cocher (ou ⇧⌘L)
-    - [x] Les listes continuent toutes seules avec ↩
-    - **gras** (⌘B), *italique* (⌘I), `code`, # titres
-    - Ajoute des #tags n'importe où pour filtrer
-    - [ ] Rappel : @demain 14h, @14h30, @lundi 9h, @dans 30min
-
-    ## Naviguer
-    - ⌘N nouvelle note · ⌘F rechercher · ⌘1…9 aller à une note
-    - ⌥⌘↑ / ⌥⌘↓ note précédente / suivante
-    - ⌘⇧K garder la fenêtre ouverte · ⌘0 masquer la liste
-    - ⌘⇧P favori · ⌘⇧A archiver · ⌘⇧⌫ corbeille (gardée 30 jours)
-    - Échap fermer
-
-    Réglages : ⌘, ou clic droit sur l'icône de la barre des menus
-    """
+    /// The welcome note, translated like the rest of the UI (its English text is the catalog key).
+    private static var welcomeText: String { tr(welcomeEN) }
 
     private static let welcomeEN = """
     # Welcome to Tack 📌
