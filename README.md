@@ -10,6 +10,7 @@
 Checklists, reminders, tags and Markdown in a tiny native menu bar app for macOS. Free, open source, and nothing leaves your Mac.
 
 [![CI](https://github.com/ryolay/tack/actions/workflows/ci.yml/badge.svg)](https://github.com/ryolay/tack/actions/workflows/ci.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9593812e7b1a47b9b2db2e2edce0b9a1)](https://app.codacy.com/gh/ryolay/tack/dashboard)
 [![Latest release](https://img.shields.io/github/v/release/ryolay/tack?color=orange)](https://github.com/ryolay/tack/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-black?logo=apple)
