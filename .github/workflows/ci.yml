@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: SwiftLint
+        run: |
+          brew install swiftlint
+          swiftlint lint --strict --reporter github-actions-logging
+      - name: Markdown
+        run: npx --yes markdownlint-cli2 "**/*.md" "#.build" "#build"
+
+  build:
+    name: Build & test
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: swift --version
+      - name: Unit tests
+        run: swift test
+      - name: Build the app (universal)
+        run: ./build.sh universal
+      - name: Package
+        run: ditto -c -k --keepParent build/Tack.app Tack.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Tack
+          path: Tack.zip
+          if-no-files-found: error

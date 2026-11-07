@@ -1,0 +1,19 @@
+---
+# Codacy configuration — https://docs.codacy.com/repositories-configure/codacy-configuration-file/
+# SwiftLint reads .swiftlint.yml from the repository root
+# (enable "Use configuration file" for SwiftLint in Codacy's Code patterns page).
+engines:
+  swiftlint:
+    enabled: true
+  markdownlint:
+    enabled: true
+  shellcheck:
+    enabled: true
+  duplication:
+    enabled: true
+    exclude_paths:
+      - "Tests/**"
+exclude_paths:
+  - ".build/**"
+  - "build/**"
+  - "docs/**"

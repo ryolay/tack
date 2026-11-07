@@ -1,0 +1,51 @@
+# SwiftLint — the same configuration is used locally, in CI and by Codacy.
+included:
+  - Sources
+  - Tests
+  - Package.swift
+excluded:
+  - .build
+  - build
+  - scripts
+
+opt_in_rules:
+  - closure_spacing
+  - empty_count
+  - first_where
+  - implicit_return
+  - modifier_order
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - unneeded_parentheses_in_closure_argument
+  - vertical_whitespace_closing_braces
+
+disabled_rules:
+  - todo
+  - trailing_comma # trailing commas keep diffs small
+
+line_length:
+  warning: 140
+  error: 200
+  ignores_urls: true
+  ignores_comments: true
+type_body_length:
+  warning: 400
+  error: 600
+file_length:
+  warning: 600
+  error: 900
+function_body_length:
+  warning: 60
+  error: 100
+cyclomatic_complexity:
+  warning: 15
+  error: 25
+identifier_name:
+  min_length: 1
+  max_length: 50
+  excluded:
+    - L # L("français", "English") localisation helper
+large_tuple:
+  warning: 3
+nesting:
+  type_level: 2
