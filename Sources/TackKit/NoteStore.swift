@@ -8,7 +8,7 @@ final class NoteStore: ObservableObject {
         didSet { if oldValue != selectedID { freezeReminders(oldValue) } }
     }
     @Published var search = ""
-    @Published var scope: Scope = .notes
+    @Published private(set) var scope: Scope = .notes
     @Published var tagFilter: String?
     @Published var focusRequest: FocusRequest?
     @Published var toast: UndoToast?
@@ -79,5 +79,11 @@ final class NoteStore: ObservableObject {
     var selected: Note? {
         guard let id = selectedID else { return nil }
         return notes.first { $0.id == id }
+    }
+
+    /// The only way to change the scope. The tag filter belongs to one scope, so it is cleared too.
+    func applyScope(_ newScope: Scope) {
+        scope = newScope
+        tagFilter = nil
     }
 }

@@ -4,8 +4,7 @@ extension NoteStore {
     // MARK: - Navigation
 
     func setScope(_ s: Scope) {
-        scope = s
-        tagFilter = nil
+        applyScope(s)
         selectedID = filtered.first?.id
     }
 
@@ -18,8 +17,7 @@ extension NoteStore {
 
     func newNote() {
         search = ""
-        tagFilter = nil
-        scope = .notes
+        applyScope(.notes)
         if let empty = notes.first(where: { $0.isEmpty && !$0.isTrashed && !$0.archived }) {
             selectedID = empty.id
         } else {
@@ -47,8 +45,7 @@ extension NoteStore {
     func reveal(_ id: UUID) {
         guard let n = notes.first(where: { $0.id == id }) else { return }
         search = ""
-        tagFilter = nil
-        scope = n.isTrashed ? .trash : (n.archived ? .archive : .notes)
+        applyScope(n.isTrashed ? .trash : (n.archived ? .archive : .notes))
         selectedID = id
     }
 
