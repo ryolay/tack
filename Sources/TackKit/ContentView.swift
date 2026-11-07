@@ -5,7 +5,10 @@ struct ContentView: View {
     @AppStorage("language") private var language = "system"
 
     var body: some View {
-        MainView().id(language) // rebuild everything when the language changes
+        MainView()
+            .environment(\.layoutDirection, Lang.layoutDirection)
+            .environment(\.locale, Lang.locale)
+            .id(language) // rebuild everything when the language changes
     }
 }
 
@@ -65,7 +68,7 @@ private struct MainView: View {
             noteList
 
             if store.scope == .trash, store.count(.trash) > 0 {
-                Button(L("Vider la corbeille", "Empty Trash"), role: .destructive) { store.emptyTrash() }
+                Button(tr("Empty Trash"), role: .destructive) { store.emptyTrash() }
                     .buttonStyle(.plain)
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.red)
@@ -104,7 +107,7 @@ private struct MainView: View {
     private var searchField: some View {
         HStack(spacing: 6) {
             Image(systemName: "magnifyingglass").foregroundStyle(.secondary)
-            TextField(L("Rechercher", "Search"), text: $store.search)
+            TextField(tr("Search"), text: $store.search)
                 .textFieldStyle(.plain)
                 .focused($searchFocused)
             if !store.search.isEmpty {
@@ -168,11 +171,11 @@ private struct MainView: View {
     }
 
     private var emptyMessage: String {
-        if !store.search.isEmpty { return L("Aucun résultat", "No results") }
+        if !store.search.isEmpty { return tr("No results") }
         switch store.scope {
-        case .notes: return L("Aucune note", "No notes")
-        case .archive: return L("Aucune archive", "Nothing archived")
-        case .trash: return L("Corbeille vide\nVidée après 30 jours", "Trash is empty\nEmptied after 30 days")
+        case .notes: return tr("No notes")
+        case .archive: return tr("Nothing archived")
+        case .trash: return tr("Trash is empty\nEmptied after 30 days")
         }
     }
 
@@ -180,25 +183,25 @@ private struct MainView: View {
     @ViewBuilder
     private func noteMenu(_ note: Note) -> some View {
         if note.isTrashed {
-            Button(L("Restaurer", "Restore")) { store.restore(note.id) }
-            Button(L("Supprimer définitivement", "Delete Permanently"), role: .destructive) { store.deleteForever(note.id) }
+            Button(tr("Restore")) { store.restore(note.id) }
+            Button(tr("Delete Permanently"), role: .destructive) { store.deleteForever(note.id) }
         } else {
             Button { store.togglePin(note.id) } label: {
-                Label(note.pinned ? L("Retirer des favoris", "Remove from Favorites") : L("Ajouter aux favoris", "Add to Favorites"),
+                Label(note.pinned ? tr("Remove from Favorites") : tr("Add to Favorites"),
                       systemImage: note.pinned ? "star.slash" : "star")
             }
             Button { store.toggleArchive(note.id) } label: {
-                Label(note.archived ? L("Désarchiver", "Unarchive") : L("Archiver", "Archive"), systemImage: "archivebox")
+                Label(note.archived ? tr("Unarchive") : tr("Archive"), systemImage: "archivebox")
             }
             Button {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.setString(note.text, forType: .string)
             } label: {
-                Label(L("Copier le texte", "Copy Text"), systemImage: "doc.on.doc")
+                Label(tr("Copy Text"), systemImage: "doc.on.doc")
             }
             Divider()
             Button(role: .destructive) { store.trash(note.id) } label: {
-                Label(L("Mettre à la corbeille", "Move to Trash"), systemImage: "trash")
+                Label(tr("Move to Trash"), systemImage: "trash")
             }
         }
     }
@@ -207,7 +210,7 @@ private struct MainView: View {
         Button { store.newNote() } label: {
             HStack {
                 Image(systemName: "plus")
-                Text(L("Nouvelle note", "New Note"))
+                Text(tr("New Note"))
                 Spacer()
                 Text("⌘N").foregroundStyle(.tertiary)
             }
@@ -229,9 +232,9 @@ private struct MainView: View {
                 if note.isTrashed {
                     HStack {
                         Image(systemName: "trash")
-                        Text(L("Cette note est dans la corbeille", "This note is in the Trash"))
+                        Text(tr("This note is in the Trash"))
                         Spacer()
-                        Button(L("Restaurer", "Restore")) { store.restore(note.id) }
+                        Button(tr("Restore")) { store.restore(note.id) }
                     }
                     .font(.system(size: 12))
                     .padding(.horizontal, 12).padding(.vertical, 7)
@@ -248,8 +251,8 @@ private struct MainView: View {
                 footer(note)
             } else {
                 VStack(spacing: 10) {
-                    Text(L("Aucune note sélectionnée", "No note selected")).foregroundStyle(.secondary)
-                    Button(L("Nouvelle note", "New Note")) { store.newNote() }
+                    Text(tr("No note selected")).foregroundStyle(.secondary)
+                    Button(tr("New Note")) { store.newNote() }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -260,26 +263,26 @@ private struct MainView: View {
     private var header: some View {
         HStack(spacing: 10) {
             IconButton(symbol: "sidebar.left", active: !showSidebar,
-                       help: L("Afficher / masquer la liste (⌘0)", "Show / hide list (⌘0)")) {
+                       help: tr("Show / hide list (⌘0)")) {
                 showSidebar.toggle()
             }
             if let note = store.selected, !note.isTrashed {
                 Divider().frame(height: 14)
-                formatButton("textformat", L("Titre", "Title"), .title)
-                formatButton("checklist", L("Checklist (⇧⌘L)", "Checklist (⇧⌘L)"), .checklist)
-                formatButton("list.bullet", L("Liste à puces", "Bulleted list"), .bullet)
-                formatButton("list.number", L("Liste numérotée", "Numbered list"), .numbered)
+                formatButton("textformat", tr("Title"), .title)
+                formatButton("checklist", tr("Checklist (⇧⌘L)"), .checklist)
+                formatButton("list.bullet", tr("Bulleted list"), .bullet)
+                formatButton("list.number", tr("Numbered list"), .numbered)
             }
             Spacer()
             IconButton(symbol: store.keepOpen ? "pin.fill" : "pin", active: store.keepOpen,
-                       help: store.keepOpen ? L("Fenêtre gardée au premier plan (⌘⇧K)", "Window stays on top (⌘⇧K)")
-                                            : L("Garder la fenêtre ouverte (⌘⇧K)", "Keep window open (⌘⇧K)")) {
+                       help: store.keepOpen ? tr("Window stays on top (⌘⇧K)")
+                                            : tr("Keep window open (⌘⇧K)")) {
                 store.keepOpen.toggle()
             }
             Menu {
                 if let note = store.selected { noteMenu(note); Divider() }
-                Button { showHelp = true } label: { Label(L("Raccourcis", "Shortcuts"), systemImage: "keyboard") }
-                Button { store.onOpenSettings?() } label: { Label(L("Réglages…", "Settings…"), systemImage: "gearshape") }
+                Button { showHelp = true } label: { Label(tr("Shortcuts"), systemImage: "keyboard") }
+                Button { store.onOpenSettings?() } label: { Label(tr("Settings…"), systemImage: "gearshape") }
             } label: {
                 Image(systemName: "ellipsis.circle")
                     .font(.system(size: 13))
@@ -288,9 +291,9 @@ private struct MainView: View {
             .menuStyle(.borderlessButton)
             .menuIndicator(.hidden)
             .fixedSize()
-            .help(L("Plus d'options", "More"))
+            .help(tr("More"))
             .popover(isPresented: $showHelp, arrowEdge: .bottom) { HelpView() }
-            IconButton(symbol: "xmark", help: L("Fermer (Échap)", "Close (Esc)")) { store.close() }
+            IconButton(symbol: "xmark", help: tr("Close (Esc)")) { store.close() }
         }
         .padding(.horizontal, 14)
         .padding(.top, 11)
@@ -305,19 +308,19 @@ private struct MainView: View {
 
     private func footer(_ note: Note) -> some View {
         HStack(spacing: 12) {
-            Text(L("Modifiée ", "Edited ") + note.updated.formatted(.relative(presentation: .named)))
+            Text(trf("Edited %@", note.updated.formatted(.relative(presentation: .named).locale(Lang.locale))))
                 .foregroundStyle(.tertiary)
                 .lineLimit(1)
             if note.nextReminder != nil, store.notificationsDenied {
                 Button { ReminderScheduler.openSystemSettings() } label: {
-                    Label(L("Notifications désactivées — activer", "Notifications off — enable"), systemImage: "bell.slash.fill")
+                    Label(tr("Notifications off — enable"), systemImage: "bell.slash.fill")
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(.red)
             } else if let next = note.nextReminder {
-                Label(L("Rappel ", "Reminder ") + next.formatted(.relative(presentation: .named)), systemImage: "bell.fill")
+                Label(trf("Reminder %@", next.formatted(.relative(presentation: .named).locale(Lang.locale))), systemImage: "bell.fill")
                     .foregroundStyle(.orange)
-                    .help(next.formatted(date: .complete, time: .shortened))
+                    .help(next.formatted(Date.FormatStyle(date: .complete, time: .shortened).locale(Lang.locale)))
             }
             Spacer()
             Text(stats(note.text)).foregroundStyle(.tertiary)
@@ -332,7 +335,7 @@ private struct MainView: View {
         if let t = store.toast {
             HStack(spacing: 12) {
                 Text(t.message)
-                Button(L("Annuler", "Undo")) { store.undoToast() }
+                Button(tr("Undo")) { store.undoToast() }
                     .buttonStyle(.plain)
                     .foregroundStyle(Color.accentColor)
                     .fontWeight(.semibold)
@@ -347,32 +350,32 @@ private struct MainView: View {
 
     private func stats(_ text: String) -> String {
         let words = text.split { $0.isWhitespace || $0.isNewline }.count
-        return L("\(words) mot\(words > 1 ? "s" : "")", "\(words) word\(words == 1 ? "" : "s")")
+        return trf("%lld words", words)
     }
 }
 
 struct HelpView: View {
     private var sections: [(String, [(String, String)])] {
         [
-            (L("Écrire", "Writing"), [
-                ("- [ ]", L("Case à cocher (ou ⇧⌘L)", "Checkbox (or ⇧⌘L)")),
-                ("# ## ###", L("Titres", "Headings")),
-                ("⌘B  ⌘I", L("Gras, italique", "Bold, italic")),
-                ("#tag", L("Tag pour filtrer", "Tag to filter")),
-                (L("@demain 14h", "@tomorrow 2pm"), L("Rappel", "Reminder")),
+            (tr("Writing"), [
+                ("- [ ]", tr("Checkbox (or ⇧⌘L)")),
+                ("# ## ###", tr("Headings")),
+                ("⌘B  ⌘I", tr("Bold, italic")),
+                ("#tag", tr("Tag to filter")),
+                (tr("@tomorrow 2pm"), tr("Reminder")),
             ]),
-            (L("Naviguer", "Navigate"), [
-                ("⌘N", L("Nouvelle note", "New note")),
-                ("⌘F", L("Rechercher", "Search")),
-                ("⌘1…9", L("Aller à une note", "Jump to note")),
-                ("⌘0", L("Masquer la liste", "Hide list")),
-                ("⌘⇧K", L("Garder la fenêtre ouverte", "Keep window open")),
-                ("Esc", L("Fermer", "Close")),
+            (tr("Navigate"), [
+                ("⌘N", tr("New note")),
+                ("⌘F", tr("Search")),
+                ("⌘1…9", tr("Jump to note")),
+                ("⌘0", tr("Hide list")),
+                ("⌘⇧K", tr("Keep window open")),
+                ("Esc", tr("Close")),
             ]),
-            (L("Organiser", "Organize"), [
-                ("⌘⇧P", L("Favori", "Favorite")),
-                ("⌘⇧A", L("Archiver", "Archive")),
-                ("⌘⇧⌫", L("Corbeille", "Trash")),
+            (tr("Organize"), [
+                ("⌘⇧P", tr("Favorite")),
+                ("⌘⇧A", tr("Archive")),
+                ("⌘⇧⌫", tr("Trash")),
             ]),
         ]
     }
@@ -404,16 +407,16 @@ struct NoteRow: View {
 
     static func shortReminder(_ d: Date) -> String {
         let cal = Calendar.current
-        let time = d.formatted(date: .omitted, time: .shortened)
+        let time = d.formatted(Date.FormatStyle(date: .omitted, time: .shortened).locale(Lang.locale))
         if cal.isDateInToday(d) { return time }
-        if cal.isDateInTomorrow(d) { return L("Demain", "Tomorrow") + " " + time }
-        return d.formatted(.dateTime.day().month(.abbreviated)) + " " + time
+        if cal.isDateInTomorrow(d) { return trf("Tomorrow %@", time) }
+        return d.formatted(.dateTime.day().month(.abbreviated).locale(Lang.locale)) + " " + time
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             HStack(spacing: 4) {
-                Text(note.isEmpty ? L("Nouvelle note", "New Note") : note.title)
+                Text(note.isEmpty ? tr("New Note") : note.title)
                     .font(.system(size: 13, weight: .semibold))
                     .lineLimit(1)
                 Spacer(minLength: 0)

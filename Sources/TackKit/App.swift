@@ -74,13 +74,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let event = NSApp.currentEvent
         if event?.type == .rightMouseUp || event?.modifierFlags.contains(.control) == true {
             let menu = NSMenu()
-            let newTitle = L("Nouvelle note", "New Note") + "   \(Prefs.hotKeyDisplay)"
+            let newTitle = tr("New Note") + "   \(Prefs.hotKeyDisplay)"
             menu.addItem(withTitle: newTitle, action: #selector(newNoteFromMenu), keyEquivalent: "")
-            menu.addItem(withTitle: L("Afficher les notes", "Show Notes"), action: #selector(showNotes), keyEquivalent: "")
+            menu.addItem(withTitle: tr("Show Notes"), action: #selector(showNotes), keyEquivalent: "")
             menu.addItem(.separator())
-            menu.addItem(withTitle: L("Réglages…", "Settings…"), action: #selector(showSettings), keyEquivalent: ",")
+            menu.addItem(withTitle: tr("Settings…"), action: #selector(showSettings), keyEquivalent: ",")
             menu.addItem(.separator())
-            menu.addItem(withTitle: L("Quitter Tack", "Quit Tack"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+            menu.addItem(withTitle: tr("Quit Tack"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
             menu.items.forEach { if $0.action != #selector(NSApplication.terminate(_:)) { $0.target = self } }
             statusItem.menu = menu
             statusItem.button?.performClick(nil)
@@ -106,7 +106,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel.hide()
         if settingsWindow == nil {
             let w = NSWindow(contentViewController: NSHostingController(rootView: SettingsView().environmentObject(store)))
-            w.title = L("Réglages Tack", "Tack Settings")
+            w.title = tr("Tack Settings")
             w.styleMask = [.titled, .closable]
             w.collectionBehavior = [.moveToActiveSpace, .fullScreenAuxiliary]
             w.isReleasedWhenClosed = false
@@ -123,20 +123,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let main = NSMenu()
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
-        appMenu.addItem(withTitle: L("Quitter Tack", "Quit Tack"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        appMenu.addItem(withTitle: tr("Quit Tack"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         appItem.submenu = appMenu
         main.addItem(appItem)
 
         let editItem = NSMenuItem()
-        let edit = NSMenu(title: L("Édition", "Edit"))
-        edit.addItem(withTitle: L("Annuler", "Undo"), action: Selector(("undo:")), keyEquivalent: "z")
-        let redo = edit.addItem(withTitle: L("Rétablir", "Redo"), action: Selector(("redo:")), keyEquivalent: "z")
+        let edit = NSMenu(title: tr("Edit"))
+        edit.addItem(withTitle: tr("Undo"), action: Selector(("undo:")), keyEquivalent: "z")
+        let redo = edit.addItem(withTitle: tr("Redo"), action: Selector(("redo:")), keyEquivalent: "z")
         redo.keyEquivalentModifierMask = [.command, .shift]
         edit.addItem(.separator())
-        edit.addItem(withTitle: L("Couper", "Cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x")
-        edit.addItem(withTitle: L("Copier", "Copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c")
-        edit.addItem(withTitle: L("Coller", "Paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v")
-        edit.addItem(withTitle: L("Tout sélectionner", "Select All"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
+        edit.addItem(withTitle: tr("Cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x")
+        edit.addItem(withTitle: tr("Copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c")
+        edit.addItem(withTitle: tr("Paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v")
+        edit.addItem(withTitle: tr("Select All"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a")
         editItem.submenu = edit
         main.addItem(editItem)
         NSApp.mainMenu = main

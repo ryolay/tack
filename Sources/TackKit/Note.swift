@@ -44,9 +44,9 @@ struct Note: Identifiable, Codable, Equatable {
     }
 
     var title: String {
-        guard let first = lines.first else { return L("Nouvelle note", "New Note") }
+        guard let first = lines.first else { return tr("New Note") }
         let t = Note.stripMarkers(String(first))
-        return t.isEmpty ? L("Nouvelle note", "New Note") : String(t.prefix(80))
+        return t.isEmpty ? tr("New Note") : String(t.prefix(80))
     }
 
     var preview: String {
@@ -87,8 +87,8 @@ struct Note: Identifiable, Codable, Equatable {
 
     var shortDate: String {
         let cal = Calendar.current
-        if cal.isDateInToday(updated) { return updated.formatted(date: .omitted, time: .shortened) }
-        if cal.isDateInYesterday(updated) { return L("Hier", "Yesterday") }
-        return updated.formatted(.dateTime.day().month(.abbreviated))
+        if cal.isDateInToday(updated) { return updated.formatted(Date.FormatStyle(date: .omitted, time: .shortened).locale(Lang.locale)) }
+        if cal.isDateInYesterday(updated) { return tr("Yesterday") }
+        return updated.formatted(.dateTime.day().month(.abbreviated).locale(Lang.locale))
     }
 }

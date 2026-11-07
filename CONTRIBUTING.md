@@ -40,7 +40,8 @@ The code lives in `Sources/TackKit` (everything testable) and `Sources/Tack` (th
 
 - **Your notes are sacred.** Never overwrite the notes file blindly; destructive actions are undoable (Trash, undo toast).
 - **No dependencies** without a very good reason. Tack is plain Swift, SwiftUI and AppKit.
-- **Every UI string is translated**: use `L("Texte français", "English text")`.
+- **Every UI string is translated.** Write it in English with `tr("New Note")` (or `trf("%lld words", count)` for formats and plurals), then add it to `Resources/Localizable.xcstrings` (open it in Xcode) for every language. `LocalizationTests` fails if a string, a language or a placeholder is missing.
+- **Translators welcome**: fixing or adding a language only touches `Localizable.xcstrings` (plus `Lang.all` and `CFBundleLocalizations` in `Info.plist` for a new language).
 - Write code, comments and commit messages in English. Commit messages follow [Conventional Commits](https://www.conventionalcommits.org) (`feat:`, `fix:`, `docs:`…).
 
 ## Releasing

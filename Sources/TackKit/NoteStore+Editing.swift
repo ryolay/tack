@@ -25,7 +25,7 @@ extension NoteStore {
         notes[i].archived.toggle()
         let nowArchived = notes[i].archived
         selectNeighbor(of: id, in: before)
-        let message = nowArchived ? L("Note archivée", "Note archived") : L("Note désarchivée", "Note unarchived")
+        let message = nowArchived ? tr("Note archived") : tr("Note unarchived")
         showToast(UndoToast(message: message, noteID: id, kind: .archive))
         saveNow()
     }
@@ -49,7 +49,7 @@ extension NoteStore {
         let fm = FileManager.default
         var used = Set<String>(), count = 0
         for note in notes where !note.isTrashed && !note.isEmpty {
-            let folder = note.archived ? dir.appendingPathComponent(L("Archives", "Archive")) : dir
+            let folder = note.archived ? dir.appendingPathComponent(tr("Archived")) : dir
             try? fm.createDirectory(at: folder, withIntermediateDirectories: true)
             let base = String(note.title.map { "/:\\".contains($0) ? "-" : $0 }.prefix(60)).trimmingCharacters(in: .whitespaces)
             var name = base.isEmpty ? "Note" : base, i = 2

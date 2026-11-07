@@ -158,7 +158,7 @@ enum MarkdownStyle {
             p.ts.addAttributes([
                 .foregroundColor: future ? NSColor.systemOrange : NSColor.tertiaryLabelColor,
                 .backgroundColor: future ? NSColor.systemOrange.withAlphaComponent(0.14) : NSColor.clear,
-                .toolTip: "🔔 " + date.formatted(date: .complete, time: .shortened)
+                .toolTip: "🔔 " + date.formatted(Date.FormatStyle(date: .complete, time: .shortened).locale(Lang.locale))
             ], range: m.range)
         }
         for m in detector.matches(in: p.string, range: p.full) {

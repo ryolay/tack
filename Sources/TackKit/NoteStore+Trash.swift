@@ -9,7 +9,7 @@ extension NoteStore {
             notes.remove(at: i)
         } else {
             notes[i].deletedAt = Date()
-            showToast(UndoToast(message: L("Placée dans la corbeille", "Moved to Trash"), noteID: id, kind: .trash))
+            showToast(UndoToast(message: tr("Moved to Trash"), noteID: id, kind: .trash))
         }
         selectNeighbor(of: id, in: before)
         saveNow()

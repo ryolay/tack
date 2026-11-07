@@ -43,8 +43,6 @@ cyclomatic_complexity:
 identifier_name:
   min_length: 1
   max_length: 50
-  excluded:
-    - L # L("français", "English") localisation helper
 large_tuple:
   warning: 3
 nesting:
