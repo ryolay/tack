@@ -17,10 +17,13 @@ The code lives in `Sources/TackKit` (everything testable) and `Sources/Tack` (th
 
 | File | What it does |
 | --- | --- |
-| `PanelController.swift` | The floating panel, full-screen behaviour and keyboard shortcuts |
-| `MarkdownEditor.swift` | The text view: live styling, Simple mode drawing, lists and checkboxes |
-| `NoteStore.swift` | Notes, search, tags, archive, Trash and persistence |
-| `Reminders.swift` | `@reminder` parsing and macOS notifications |
+| `PanelController.swift`, `PanelController+Keyboard.swift` | The floating panel, full-screen behaviour and keyboard shortcuts |
+| `MarkdownEditor.swift` | SwiftUI wrapper around the text view |
+| `MarkdownStyle.swift` | Live styling of Markdown and Simple mode |
+| `TackTextView.swift`, `TackTextView+Lists.swift` | Clicks on checkboxes, formatting shortcuts, list editing |
+| `TackLayoutManager.swift` | Draws the Simple mode circles and bullets |
+| `Note.swift`, `NoteStore*.swift` | Notes, search, tags, archive, Trash and persistence |
+| `ReminderParser*.swift`, `ReminderScheduler.swift` | `@reminder` parsing and macOS notifications |
 | `SettingsView.swift` | The Settings window |
 
 ## Before you open a pull request
