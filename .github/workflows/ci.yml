@@ -40,7 +40,7 @@ jobs:
         run: ./build.sh universal
       - name: Package
         run: ditto -c -k --keepParent build/Tack.app Tack.zip
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Tack
           path: Tack.zip
