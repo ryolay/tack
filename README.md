@@ -30,7 +30,7 @@ Checklists, reminders, tags and Markdown in a tiny native menu bar app for macOS
 
 <br>
 
-[**Download Tack 0.1.0**](https://github.com/ryolay/tack/releases/latest) · [Features](#-features) · [Languages](#-available-in-34-languages) · [Shortcuts](#%EF%B8%8F-keyboard-shortcuts) · [Build from source](#-build-from-source)
+[**Download Tack**](https://github.com/ryolay/tack/releases/latest) · [Features](#-features) · [Languages](#-available-in-34-languages) · [Shortcuts](#%EF%B8%8F-keyboard-shortcuts) · [Build from source](#-build-from-source)
 
 </div>
 
