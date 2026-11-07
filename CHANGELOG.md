@@ -6,10 +6,20 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-07
+
 ### Added
 
 - Tack speaks 34 languages, with right-to-left layouts for Arabic and Hebrew. It follows the system language, or the one picked in Settings (listed with flags and native names).
 - Translations use Apple's String Catalog (`Resources/Localizable.xcstrings`), checked by tests in CI.
+
+### Fixed
+
+- Scheduled reminders are kept until notification authorization is confirmed, so a failed request no longer drops them.
+
+### Changed
+
+- Source files split by responsibility (Codacy grade A on every file).
 
 ## [0.1.0] - 2026-11-07
 
@@ -27,5 +37,6 @@ First public release.
 - Settings for the shortcut, language (English or French), reminders, launch at login and Markdown export.
 - Local storage in a single JSON file with a backup at every launch; nothing leaves your Mac.
 
-[Unreleased]: https://github.com/ryolay/tack/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ryolay/tack/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ryolay/tack/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ryolay/tack/releases/tag/v0.1.0
